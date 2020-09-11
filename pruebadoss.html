@@ -1,0 +1,149 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+   $(document).ready(function() {
+   var checkboxes = $("input[type=checkbox]");
+   var checkboxes_A = $('#2014,#2015,#2016');
+   var checkboxes_B = $('#q1,#q2');
+
+   var CBchecked_A = [];
+   var CBunchecked_A = [];
+   var CBchecked_B = [];
+   var CBunchecked_B = [];
+
+   checkboxes.on("change",function(e){ 
+      CBunchecked = $.map(checkboxes, function(el){
+         if(el) { return "."+el.id }
+           });   
+
+           checkboxes.on("change",function(e){ 
+      CBchecked_A = $.map(checkboxes_A, function(el){
+         if(el.checked) { return "."+el.id }
+           });
+      CBunchecked_A = $.map(checkboxes_A, function(el){
+         if(el) { return "."+el.id }
+           }); 
+           console.log(CBchecked_A);
+   
+           checkboxes.on("change",function(e){ 
+      CBchecked_B = $.map(checkboxes_B, function(el){
+         if(el.checked) { return "."+el.id }
+           });
+      CBunchecked_B = $.map(checkboxes_B, function(el){
+         if(el) { return "."+el.id }
+           });   
+
+
+   var todo=CBunchecked.join(",");
+   $(todo).hide();
+   console.log(todo);
+   
+         console.log(CBchecked_B);
+                 
+         console.log(CBchecked_B.flatMap(d => CBchecked_A.map(v => d + v)));
+
+   var todoamostrar;
+   if(CBchecked_B.length > 0 & CBchecked_A.length > 0){
+      todoamostrar=CBchecked_B.flatMap(d => CBchecked_A.map(v => d + v));
+   };
+   if(CBchecked_B.length > 0 & CBchecked_A.length === 0){
+      todoamostrar=CBchecked_B;
+   };
+   if(CBchecked_B.length === 0 & CBchecked_A.length > 0){
+      todoamostrar=CBchecked_A;
+   };
+         $(todoamostrar.join(",")).show();
+
+   });
+});
+});  
+}); 
+
+</script>
+<title>pruebas</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+   .active {
+   color:#FFF;
+   background-color: #337ab7;
+   border-color: #2e6da4;
+   font-weight:bold;
+   }
+</style>
+</head>
+<body class="text-center">
+   </div>
+   </div>
+   <div class=>
+      <div class=" btn-group-horizontal  col-sm-6" data-toggle="buttons" >
+         <h3>
+         Years</h3
+         <div class=data-toggle="buttons"  class="col-sm-6">
+            <label class="btn btn-secondary   ">
+            <input type="checkbox" id="2014" name="Year" unchecked autocomplete="off" hidden> 2014
+            </label>
+            <label class="btn btn-toggle btn-secondary ">
+            <input type="checkbox" id="2015" name="Year" unchecked autocomplete="off" hidden> 2015
+            </label>
+            <label class="btn btn-secondary  ">
+            <input type="checkbox" id="2016" name="Year" unchecked autocomplete="off" hidden> 2016
+            </label>
+         </div>
+      </div>
+      <div class="text-center btn-group-horizontal  col-sm-6 " data-toggle="buttons" >
+         <h3>
+         Quarters</h3
+         <div class=data-toggle="buttons"    class="col-sm-6">
+            <label class="btn btn-secondary   ">
+            <input type="checkbox" id="q1" name="quarter" unchecked autocomplete="off" hidden> q1
+            </label>
+            <label class="btn btn-toggle btn-secondary ">
+            <input type="checkbox" id="q2" name="quarter" unchecked autocomplete="off" hidden> q2
+            </label>
+         </div>
+      </div>
+   </div>
+   <div class="container  text-center align-items-center justify-content-center">
+      <table class="table">
+         <thead>
+            <tr style="text-align: right;">
+               <th>Year</th>
+               <th>quarter</th>
+               <th>numbercolsheu</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="2014 q1">
+               <td>2014</td>
+               <td>q1</td>
+               <td>10</td>
+            </tr>
+            <tr class="2015 q2">
+               <td>2015</td>
+               <td>q2</td>
+               <td>110</td>
+            </tr>
+            <tr class="2016 q2">
+               <td>2016</td>
+               <td>q2</td>
+               <td>10</td>
+            </tr>
+            <tr class="2015 q1">
+               <td>2015</td>
+               <td>q1</td>
+               <td>21</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+   </br>
+   </br>
+   </br>
+   </br>
+   </br>
+</body>
+</html>
