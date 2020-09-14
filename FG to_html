@@ -1,32 +1,26 @@
-
 def FG_to_html(*args):
-    dfhead = args[0].head(1).copy()
+    dfhead=args[0].head(1).copy()
 
-    if len(args) > 1:
-        colfilters = [''.join(tups) for tups in args[1:]]
+    if len(args)>1:
+        colfilters= [''.join(tups) for tups in args[1:]]
     else:
-        colfilters = list(df.columns)
+        colfilters=list(df.columns)
 
-    dfhead.iloc[0, :] = list(df.columns)
-    dfhead.insert(0, 'tr_classes', '<table class="table"><thead>')
+    dfhead.iloc[0,:]=list(df.columns)
+    dfhead.insert(0,'tr_classes', '<table class="table"><thead>')
 
-    for i in range(1, dfhead.shape[1]):
-        dfhead.iloc[:1, i] = dfhead.iloc[:1, i].apply(lambda x: '<th>' \
-                + str(x) + '</th>')
-    dfhead['end tr'] = '</thead> <tbody>'
-    dffinal = args[0].copy()
-    tr_classes = list(dffinal[colfilters].apply(lambda x: '<tr class="' \
-                      + '-'.join(x.values.astype(str)).replace('.', ''
-                      ).replace(' ', '_').replace('-', ' ') + '">',
-                      axis=1))
-    dffinal.insert(0, 'tr_classes', tr_classes)
-    for i in range(1, dffinal.shape[1]):
-        dffinal.iloc[:, i] = dffinal.iloc[:, i].map(lambda x: '<td>' \
-                + str(x) + '</td>')
-    dffinal['end tr'] = '</tr>'
+    for i in range(1,dfhead.shape[1]):
+        dfhead.iloc[:1,i]=dfhead.iloc[:1,i].apply(lambda x: '<th onclick="sortTable(' + str(i-1) + ')">'+ str(x) +'</th>')
+    dfhead['end tr']='</thead> <tbody>'
+    dffinal=args[0].copy()
+    tr_classes=list(dffinal[colfilters].apply(lambda x: '<tr class="' + '-'.join(x.values.astype(str)).replace('.','').replace(' ','_').replace('-',' ') +'">', axis=1))
+    dffinal.insert(0,'tr_classes', tr_classes)
+    for i in range(1,dffinal.shape[1]):
+        dffinal.iloc[:,i]=dffinal.iloc[:,i].map(lambda x: '<td>' + str(x) +'</td>')
+    dffinal['end tr']='</tr>'
     dffinal.append(pd.Series(), ignore_index=True)
-    dffinalizimo = pd.concat([dfhead, dffinal]).reset_index(drop=True)
+    dffinalizimo=pd.concat([dfhead, dffinal]).reset_index(drop=True)
     dffinalizimo.loc[dffinalizimo.index.max() + 1] = ''
-    dffinalizimo.iloc[-1, 0] = '</tbody></table>'
-    html = dffinalizimo.to_string(header=False, index=None).replace('\n', '')
+    dffinalizimo.iloc[-1,0]='</tbody></table>'
+    html=dffinalizimo.to_string(header=False, index=None).replace('\n','')
     return html
