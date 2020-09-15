@@ -1,19 +1,38 @@
-def FG_to_html(*args):
-    dfhead=args[0].head(1).copy()
+def FG_to_html(df,*args):
+    import string
+    dfhead=df.head(1).copy()
 
     if len(args)>1:
-        colfilters= [''.join(tups) for tups in args[1:]]
+        colfilters= [''.join(tups) for tups in args]
+        hlencols=len(args)
+        ixcols=[]
+        for f in args:
+            ixcols.append(df.columns.get_loc(f))
     else:
-        colfilters=list(df.columns)
+        hlencols=df.shape[1]
+        ixcols=list(range(hlencols))
+        colfilters=list(dfhead.columns)
 
-    dfhead.iloc[0,:]=list(df.columns)
-    dfhead.insert(0,'tr_classes', '<table class="table"><thead>')
+    dfhead.iloc[0,:]=list(dfhead.columns)
+    dfhead.insert(0,'tr_classes', '<table class="table" id="mytable"><thead>')
 
     for i in range(1,dfhead.shape[1]):
         dfhead.iloc[:1,i]=dfhead.iloc[:1,i].apply(lambda x: '<th onclick="sortTable(' + str(i-1) + ')">'+ str(x) +'</th>')
     dfhead['end tr']='</thead> <tbody>'
-    dffinal=args[0].copy()
-    tr_classes=list(dffinal[colfilters].apply(lambda x: '<tr class="' + '-'.join(x.values.astype(str)).replace('.','').replace(' ','_').replace('-',' ') +'">', axis=1))
+    dffinal=df.copy()
+
+    list_preffix=[]
+
+    for i in ixcols:
+        list_preffix.append(string.ascii_lowercase[i]+'_')
+    hola=[]
+    for j in range(df.shape[0]):
+        for i in ixcols:   
+            hola.append(test_list[i]+str(carsdf.iloc[j,i])) 
+    chau=[]
+    for h in (np.resize(hola,(df.shape[0],hlencols))).tolist():
+        chau.append('<tr class="' +'-'.join(h).replace('.','').replace(' ','_').replace('-',' ') +'">')
+    tr_classes=chau
     dffinal.insert(0,'tr_classes', tr_classes)
     for i in range(1,dffinal.shape[1]):
         dffinal.iloc[:,i]=dffinal.iloc[:,i].map(lambda x: '<td>' + str(x) +'</td>')
