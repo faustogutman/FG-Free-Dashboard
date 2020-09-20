@@ -1,0 +1,20 @@
+def FG_botones_html(df,*args):
+    import math    
+    import string
+    lenargs=len(args)
+    colmd=math.floor(12/lenargs)
+    todascategorias=[]
+    for arg in args:
+        columnname=arg
+        prueba=carsdf[columnname].drop_duplicates()
+        columnnumber=df.columns.get_loc(arg)
+        list_preffix=(string.ascii_lowercase[columnnumber]+'_')
+
+        for item in range(len(prueba)):
+            prueba[item]='<label class="btn btn-secondary"> <input type="checkbox" id="' +list_preffix + prueba[item].replace(' ','_') +'" name="'+ columnname +'"  unchecked autocomplete="off" hidden>'+ prueba[item] +'</label>' 
+        todosbotones=[]
+        todosbotones.append('<div class=" btn-group-horizontal col-md-'+ str(colmd) + '" data-toggle="buttons" ><h3>'+columnname+'</h3>'  +''.join(prueba)+'</div>')
+        todascategorias.append(''.join(todosbotones))
+
+    finaltodosbotones='<div class="d-flex text-center">'+ ''.join(todascategorias) +'</div>'
+    return finaltodosbotones
